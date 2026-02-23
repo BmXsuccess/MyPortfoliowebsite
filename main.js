@@ -1,4 +1,62 @@
 ﻿const canvas = document.getElementById("particles");
+
+const transitionLayer = document.createElement("div");
+transitionLayer.className = "page-transition-layer";
+document.body.appendChild(transitionLayer);
+requestAnimationFrame(() => {
+    transitionLayer.classList.add("is-ready");
+});
+
+const currentPage = window.location.pathname.split("/").pop() || "index.html";
+if (currentPage !== "contact.html") {
+    const quickCta = document.createElement("a");
+    quickCta.href = "contact.html";
+    quickCta.className = "quick-cta";
+    quickCta.textContent = "Contact Me";
+    document.body.appendChild(quickCta);
+}
+
+const revealTargets = document.querySelectorAll(".glass-card, .section-title, .hero-intro, .hero-badges");
+if (revealTargets.length > 0) {
+    const showAll = () => revealTargets.forEach((el) => el.classList.add("is-visible"));
+    revealTargets.forEach((el) => el.classList.add("reveal-ready"));
+
+    if ("IntersectionObserver" in window) {
+        const revealObserver = new IntersectionObserver(
+            (entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("is-visible");
+                        observer.unobserve(entry.target);
+                    }
+                });
+            },
+            { threshold: 0.1, rootMargin: "0px 0px -6% 0px" }
+        );
+        revealTargets.forEach((el) => revealObserver.observe(el));
+        // Fallback: make sure nothing stays hidden if initial paint is missed.
+        setTimeout(showAll, 900);
+    } else {
+        showAll();
+    }
+}
+
+document.querySelectorAll('a[href$=".html"]').forEach((link) => {
+    if (link.hasAttribute("target")) return;
+    link.addEventListener("click", (e) => {
+        const url = link.getAttribute("href");
+        if (!url) return;
+        const current = window.location.pathname.split("/").pop() || "index.html";
+        if (url === current) return;
+        e.preventDefault();
+        transitionLayer.classList.remove("is-ready");
+        transitionLayer.classList.add("is-leaving");
+        setTimeout(() => {
+            window.location.href = url;
+        }, 280);
+    });
+});
+
 if (canvas) {
     const ctx = canvas.getContext("2d");
     canvas.width = window.innerWidth;
@@ -113,3 +171,52 @@ document.querySelectorAll(".copy-btn").forEach((btn) => {
         }
     });
 });
+
+const projectModal = document.getElementById("project-modal");
+if (projectModal) {
+    const modalTitle = document.getElementById("project-modal-title");
+    const modalDescription = document.getElementById("project-modal-description");
+    const modalRole = document.getElementById("project-modal-role");
+    const modalTags = document.getElementById("project-modal-tags");
+
+    const closeModal = () => {
+        projectModal.classList.remove("show");
+        projectModal.setAttribute("aria-hidden", "true");
+        document.body.classList.remove("modal-open");
+    };
+
+    const openProjectModal = (card) => {
+        const title = card.querySelector("h3")?.textContent?.trim() || "Project";
+        const desc = card.querySelector("p")?.textContent?.trim() || "";
+        const role = card.querySelector(".portfolio-role")?.textContent?.trim() || "";
+        const tags = Array.from(card.querySelectorAll(".tech-tags span")).map((t) => t.textContent.trim());
+
+        if (modalTitle) modalTitle.textContent = title;
+        if (modalDescription) modalDescription.textContent = desc;
+        if (modalRole) modalRole.textContent = role;
+        if (modalTags) modalTags.innerHTML = tags.map((tag) => `<span>${tag}</span>`).join("");
+
+        projectModal.classList.add("show");
+        projectModal.setAttribute("aria-hidden", "false");
+        document.body.classList.add("modal-open");
+    };
+
+    document.querySelectorAll(".portfolio-item").forEach((card) => {
+        card.addEventListener("click", (e) => {
+            if (e.target.closest('a[target="_blank"]')) return;
+            if (e.target.closest("[data-open-modal]") || !e.target.closest("a")) {
+                openProjectModal(card);
+            }
+        });
+    });
+
+    projectModal.querySelectorAll("[data-close-modal]").forEach((el) => {
+        el.addEventListener("click", closeModal);
+    });
+
+    document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && projectModal.classList.contains("show")) {
+            closeModal();
+        }
+    });
+}

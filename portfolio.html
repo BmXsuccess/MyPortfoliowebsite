@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Project portfolio with case previews and featured work by Supasa Tasuya.">
 <title>Portfolio Website - Portfolio</title>
 <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="styles.css">
@@ -24,8 +25,8 @@
     <h2 style="margin-bottom:40px;">ผลงาน</h2>
     <div class="portfolio-grid">
         <div class="portfolio-item glass-card">
-            <a href="https://chaiprakran.dho.go.th/web/index.php?r=ita%2Fhome&hoscode=00549" target="_blank" >
-            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLPpI2kTJwV7Ad7wsvGM2NzPLcVDGPc5CYxQ&s">
+            <a href="https://chaiprakran.dho.go.th/web/index.php?r=ita%2Fhome&hoscode=00549" target="_blank" rel="noopener noreferrer">
+            <img loading="lazy" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTLPpI2kTJwV7Ad7wsvGM2NzPLcVDGPc5CYxQ&s">
             </a>
             <h3>ITA</h3>
             <p>The Chai Prakan District Public Health Office operating results improved 2025 year</p>
@@ -36,29 +37,43 @@
                 <span>Report</span>
             </div>
             <div class="portfolio-actions">
-                <a class="btn primary" href="https://chaiprakran.dho.go.th/web/index.php?r=ita%2Fhome&hoscode=00549" target="_blank">Live Demo</a>
-                <a class="btn" href="#">Case Study</a>
+                <a class="btn primary" href="https://chaiprakran.dho.go.th/web/index.php?r=ita%2Fhome&hoscode=00549" target="_blank" rel="noopener noreferrer">Live Demo</a>
+                <button class="btn" type="button" data-open-modal>Case Study</button>
             </div>
         </div>
         <div class="portfolio-item glass-card">
-            <img src="https://us.123rf.com/450wm/starlinearts/starlinearts2009/starlinearts200900193/155403869-coming-soon-background-with-megaphone-design.jpg?ver=6">
+            <img loading="lazy" src="https://us.123rf.com/450wm/starlinearts/starlinearts2009/starlinearts200900193/155403869-coming-soon-background-with-megaphone-design.jpg?ver=6">
             <h3>Coming soon.</h3>
             <p>Coming soon.</p>
             <p class="portfolio-role">บทบาท: กำลังพัฒนา</p>
             <div class="tech-tags"><span>Planning</span></div>
-            <div class="portfolio-actions"><a class="btn" href="#">Preview</a></div>
+            <div class="portfolio-actions"><button class="btn" type="button" data-open-modal>Preview</button></div>
         </div>
         <div class="portfolio-item glass-card">
-            <img src="https://us.123rf.com/450wm/starlinearts/starlinearts2009/starlinearts200900193/155403869-coming-soon-background-with-megaphone-design.jpg?ver=6">
+            <img loading="lazy" src="https://us.123rf.com/450wm/starlinearts/starlinearts2009/starlinearts200900193/155403869-coming-soon-background-with-megaphone-design.jpg?ver=6">
             <h3>Coming soon.</h3>
             <p>Coming soon.</p>
             <p class="portfolio-role">บทบาท: กำลังพัฒนา</p>
             <div class="tech-tags"><span>Planning</span></div>
-            <div class="portfolio-actions"><a class="btn" href="#">Preview</a></div>
+            <div class="portfolio-actions"><button class="btn" type="button" data-open-modal>Preview</button></div>
         </div>
     </div>
 </section>
+
+<div id="project-modal" class="project-modal" aria-hidden="true">
+    <div class="project-modal-backdrop" data-close-modal></div>
+    <div class="project-modal-card glass-card" role="dialog" aria-modal="true" aria-labelledby="project-modal-title">
+        <button class="modal-close" type="button" data-close-modal aria-label="Close modal">x</button>
+        <h3 id="project-modal-title"></h3>
+        <p id="project-modal-description"></p>
+        <p id="project-modal-role" class="portfolio-role"></p>
+        <div id="project-modal-tags" class="tech-tags"></div>
+    </div>
+</div>
 <footer>2026 Portfolio website</footer>
 <script src="main.js"></script>
 </body>
 </html>
+
+
+
