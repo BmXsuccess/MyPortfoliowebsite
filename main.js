@@ -194,7 +194,14 @@ if (projectModal) {
         if (modalTitle) modalTitle.textContent = title;
         if (modalDescription) modalDescription.textContent = desc;
         if (modalRole) modalRole.textContent = role;
-        if (modalTags) modalTags.innerHTML = tags.map((tag) => `<span>${tag}</span>`).join("");
+        if (modalTags) {
+            modalTags.replaceChildren();
+            tags.forEach((tag) => {
+                const span = document.createElement("span");
+                span.textContent = tag;
+                modalTags.appendChild(span);
+            });
+        }
 
         projectModal.classList.add("show");
         projectModal.setAttribute("aria-hidden", "false");
